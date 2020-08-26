@@ -17,7 +17,7 @@ _global_script_class_icons={
 
 config/name="Easy Mesh Viewer"
 config/description="Easy Mesh Viewer by unSAME Studio"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://Scene/Main.tscn"
 run/low_processor_mode=true
 boot_splash/image="res://Splash@2x.png"
 boot_splash/fullsize=false
