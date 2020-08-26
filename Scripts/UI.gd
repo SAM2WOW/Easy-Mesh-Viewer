@@ -11,17 +11,24 @@ func _ready():
 	$MarginContainer2/HBoxContainer/Version.set_text("Version " + version_code)
 
 
+func update_mesh_infos(verts, edges, faces):
+	var txt = "Verts: %d | Edges: %d | Faces: %d" % [verts, edges, faces]
+	$MarginContainer2/HBoxContainer/Infos.set_text(txt)
+
+
+func change_loading_visibility(show = true):
+	if show:
+		$CenterContainer/LoadingBar.show()
+	else:
+		$CenterContainer/LoadingBar.hide()
+
+
 func _on_Open_pressed():
 	$CenterContainer/FileDialog.popup()
 
 
 func _on_FileDialog_file_selected(path):
 	Global.renderer_ref.open_file(path)
-
-
-func update_mesh_infos(verts, edges, faces):
-	var txt = "Verts: %d | Edges: %d | Faces: %d" % [verts, edges, faces]
-	$MarginContainer2/HBoxContainer/Infos.set_text(txt)
 
 
 func _on_Light_pressed():

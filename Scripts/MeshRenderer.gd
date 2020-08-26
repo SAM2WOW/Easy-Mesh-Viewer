@@ -17,7 +17,7 @@ func _init():
 
 func _ready():
 	# Check for auto opening
-	yield(get_tree().create_timer(.5), "timeout")
+	# yield(get_tree().create_timer(0.01), "timeout")
 	var address = OS.get_cmdline_args()
 	
 	print(address)
@@ -77,6 +77,9 @@ func load_model_obj(path):
 	clean_stage()
 	reset_viewport()
 	
+	Global.ui_ref.change_loading_visibility(true)
+	yield(get_tree().create_timer(0.01), "timeout")
+	
 	var mesh_instance = MeshInstance.new()
 	
 	var address = path.get_basename()
@@ -97,20 +100,28 @@ func load_model_obj(path):
 	var size = 1.0 / (mesh.get_aabb().get_longest_axis_size() / 4.0)
 	mesh_instance.set_scale(Vector3(size, size, size))
 	
+	# Add mesh infos
 	var mdt = MeshDataTool.new()
 	mdt.create_from_surface(mesh, 0)
 	Global.ui_ref.update_mesh_infos(mdt.get_vertex_count(), mdt.get_edge_count(), mdt.get_face_count())
+	
+	Global.ui_ref.change_loading_visibility(false)
 
 
 func load_model_fbx(path):
 	clean_stage()
 	reset_viewport()
+
+	Global.ui_ref.change_loading_visibility(true)
+	yield(get_tree().create_timer(0.01), "timeout")
 	
 	#var mesh_instance = MeshInstance.new()
 	var mesh = ResourceLoader.load(path).instance()
 
 	#mesh_instance.set_mesh(mesh)
 	$Objects.add_child(mesh)
+	
+	Global.ui_ref.change_loading_visibility(false)
 
 
 func clean_stage():
